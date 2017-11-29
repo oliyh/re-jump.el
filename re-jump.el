@@ -13,7 +13,7 @@
                         (match-string 1 kw)))
          (kw-ns (if ns-qualifier
                     (cider-resolve-alias (cider-current-ns) ns-qualifier)
-                    (cider-current-ns)))
+                  (cider-current-ns)))
          (target-file (concat (clojure-project-dir) (cider-sync-request:ns-path kw-ns)))
          (kw-to-find (concat "::" (replace-regexp-in-string "^:+\\(.+/\\)?" "" kw)))
          (buffer (cider--find-buffer-for-file target-file)))
