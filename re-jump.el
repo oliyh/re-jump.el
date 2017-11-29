@@ -3,6 +3,7 @@
 (require 'cider-client)
 (require 'cider-common)
 (require 'cider-interaction)
+(require 'projectile)
 
 (defun re-frame-jump-to-reg ()
   (interactive)
@@ -10,10 +11,10 @@
          (ns-qualifier (and
                         (string-match "^:+\\(.+\\)/.+$" kw)
                         (match-string 1 kw)))
-         (kw-ns (or (and ns-qualifier
-                         (cider-resolve-alias (cider-current-ns) ns-qualifier))
+         (kw-ns (if ns-qualifier
+                    (cider-resolve-alias (cider-current-ns) ns-qualifier))
                     (cider-current-ns)))
-         (target-file (cider-sync-request:ns-path kw-ns))
+         (target-file (first (projectile-expand-paths (list (cider-sync-request:ns-path kw-ns)))))
          (kw-to-find (concat "::" (replace-regexp-in-string "^:+\\(.+/\\)?" "" kw)))
          (buffer (cider--find-buffer-for-file target-file)))
 
@@ -25,3 +26,4 @@
 (global-set-key (kbd "M->") 're-frame-jump-to-reg)
       
 (provide 're-jump)
+;;; re-jump.el ends here
