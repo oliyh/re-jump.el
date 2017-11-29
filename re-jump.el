@@ -18,10 +18,13 @@
          (kw-to-find (concat "::" (replace-regexp-in-string "^:+\\(.+/\\)?" "" kw)))
          (buffer (cider--find-buffer-for-file target-file)))
 
+    (when (and ns-qualifier (string= kw-ns (cider-current-ns)))
+      (error "Could not resolve alias \"%s\" in %s" ns-qualifier (cider-current-ns)))
+        
     (if buffer
         (progn (cider-jump-to buffer)
                (search-forward-regexp (concat "reg-[a-zA-Z-]*[ \\\n]+" kw-to-find) nil 'noerror))
-      (error (concat "No source location")))))
+      (error "Could not open a buffer for %s" target-file))))
       
 (global-set-key (kbd "M->") 're-frame-jump-to-reg)
       
