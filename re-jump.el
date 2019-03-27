@@ -28,7 +28,7 @@
 (require 'cider-resolve)
 (require 'cider-client)
 (require 'cider-common)
-(require 'cider-interaction)
+(require 'cider-find)
 (require 'clojure-mode)
 
 (defun re-frame-jump-to-reg ()
